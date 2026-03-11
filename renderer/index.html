@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>学生证件照批量处理工具</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>学生证件照批量处理工具</h1>
+
+      <section class="card">
+        <div class="row">
+          <label>照片文件夹</label>
+          <input id="inputDir" type="text" readonly />
+          <button id="btnSelectInput">选择文件夹</button>
+        </div>
+        <div class="row">
+          <label>导出目录</label>
+          <input id="outputDir" type="text" readonly />
+          <button id="btnSelectOutput">选择目录</button>
+        </div>
+        <div class="row">
+          <label>REMOVE_BG_API_KEY</label>
+          <input id="apiKey" type="password" placeholder="优先读取 .env，可手动覆盖" />
+        </div>
+        <div class="row">
+          <button id="btnStart" class="primary">开始处理</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>处理进度</h2>
+        <progress id="progress" value="0" max="100"></progress>
+        <p id="progressText">等待开始</p>
+      </section>
+
+      <section class="card">
+        <h2>失败列表（可手动微调）</h2>
+        <ul id="failedList"></ul>
+      </section>
+    </main>
+
+    <dialog id="manualDialog">
+      <h3>手动微调（画笔去背景）</h3>
+      <p>红色画笔=擦除（去背景），绿色画笔=恢复。完成后点击“保存到导出目录”。</p>
+      <div class="toolbar">
+        <button id="modeErase" class="danger">擦除</button>
+        <button id="modeRestore" class="success">恢复</button>
+        <label>笔刷大小 <input id="brushSize" type="range" min="5" max="80" value="28" /></label>
+      </div>
+      <canvas id="editorCanvas" width="540" height="720"></canvas>
+      <div class="toolbar">
+        <button id="btnSaveManual" class="primary">保存到导出目录</button>
+        <button id="btnCloseManual">关闭</button>
+      </div>
+    </dialog>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>
